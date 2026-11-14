@@ -1,0 +1,32 @@
+{
+  "name": "did-chain",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "workspaces": [
+    "contracts",
+    "web"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w web",
+    "build": "npm run build -w web",
+    "typecheck": "npm run typecheck -w web",
+    "test": "npm run test -w web",
+    "test:contracts": "npm run test -w contracts",
+    "compile:contracts": "npm run compile -w contracts",
+    "chain": "npm run node -w contracts",
+    "deploy": "npm run deploy -w contracts",
+    "check": "node scripts/check-config.mjs",
+    "staticcheck": "node scripts/staticcheck.mjs",
+    "demo:reset": "node scripts/reset-demo.mjs",
+    "authorize:issuer": "npm run authorize:issuer -w contracts",
+    "demo:start": "node scripts/demo-start.mjs"
+  },
+  "devDependencies": {
+    "supabase": "^2.122.1",
+    "typescript": "^5.8.3"
+  }
+}

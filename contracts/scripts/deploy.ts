@@ -1,0 +1,22 @@
+import { network } from 'hardhat';
+import { mkdir, writeFile, readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+const { ethers } = await network.connect();
+const [admin] = await ethers.getSigners();
+const registry = await ethers.deployContract('AcademicCredentialRegistry');
+await registry.waitForDeployment();
+const address = await registry.getAddress();
+const artifactPath = path.join(root, 'contracts/artifacts/contracts/AcademicCredentialRegistry.sol/AcademicCredentialRegistry.json');
+const artifact = JSON.parse(await readFile(artifactPath, 'utf8'));
+const deployment = { chainId: 31337, address, admin: admin.address, abi: artifact.abi };
+const target = path.join(root, 'web/src/generated');
+await mkdir(target, { recursive: true });
+await writeFile(path.join(target, 'deployment.json'), JSON.stringify(deployment, null, 2) + '\n');
+const record = path.join(root, 'contracts/deployments');
+await mkdir(record, { recursive: true });
+await writeFile(path.join(record, 'local.json'), JSON.stringify({ address, chainId: 31337, admin: admin.address }, null, 2) + '\n');
+console.log(`Deployed registry to ${address} on chain 31337; admin ${admin.address}`);
+console.log('ABI and address exported to web/src/generated/deployment.json');

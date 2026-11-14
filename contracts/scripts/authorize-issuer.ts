@@ -1,0 +1,18 @@
+import { network } from 'hardhat';
+import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+import { getAddress } from 'ethers';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+const raw=process.env.ISSUER_WALLET;
+if(!raw) throw new Error('Set ISSUER_WALLET to the exact local demo issuer MetaMask address.');
+const issuer=getAddress(raw);
+const { ethers }=await network.connect();
+const file=JSON.parse(await readFile(path.join(root,'web/src/generated/deployment.json'),'utf8'));
+if(!file.address)throw new Error('Deploy contract before authorizing issuer');
+const [admin]=await ethers.getSigners();
+const reg=await ethers.getContractAt('AcademicCredentialRegistry',file.address,admin);
+const tx=await reg.authorizeIssuer(issuer);
+const receipt=await tx.wait();
+if(!receipt||receipt.status!==1)throw new Error('Issuer authorization transaction failed');
+console.log('Issuer authorized',issuer,'tx',receipt.hash);

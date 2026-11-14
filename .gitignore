@@ -1,0 +1,38 @@
+node_modules/
+.env
+.env.*
+!.env.example
+web/.env
+web/.env.*
+!web/.env.example
+contracts/artifacts/
+contracts/cache/
+contracts/deployments/
+web/dist/
+*.tsbuildinfo
+.DS_Store
+coverage/
+
+# Local Python environments
+.venv/
+.venv-*/
+venv/
+__pycache__/
+
+# Local backups and archives
+*.zip
+*.tar
+*.tar.gz
+
+# Local logs and temporary files
+*.log
+*.tmp
+
+# Supabase CLI local state
+supabase/.temp/
+
+# Generated Hardhat TypeScript bindings
+contracts/types/
+
+# Editor backup files
+*.bak

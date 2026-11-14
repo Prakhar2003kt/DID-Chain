@@ -1,0 +1,5 @@
+project_id = "didchain-local-demo"
+[functions.verification-api]
+verify_jwt = false
+[functions.identity-api]
+verify_jwt = false
