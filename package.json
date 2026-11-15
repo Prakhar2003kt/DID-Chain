@@ -23,7 +23,9 @@
     "staticcheck": "node scripts/staticcheck.mjs",
     "demo:reset": "node scripts/reset-demo.mjs",
     "authorize:issuer": "npm run authorize:issuer -w contracts",
-    "demo:start": "node scripts/demo-start.mjs"
+    "demo:start": "node scripts/demo-start.mjs",
+    "demo:chain": "node scripts/start-chain.mjs",
+    "demo:launch": "node scripts/demo-launch.mjs"
   },
   "devDependencies": {
     "supabase": "^2.122.1",
